@@ -1,4 +1,4 @@
-# Decentralized Access Management with Hyperledger Fabric and AD DS
+# Decentralized Access Management with Hyperledger-Fabric & ADDS
 
 ## Project Overview
 
