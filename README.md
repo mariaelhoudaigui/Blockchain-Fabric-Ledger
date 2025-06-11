@@ -35,19 +35,19 @@ All directory changes (file additions, modifications, deletions) are captured, v
 2. Join Windows Server VM2 to the AD domain
 3. Prepare Ubuntu VM (VM3) with Docker, Docker Compose, and deploy Fabric network
 4. Deploy `access.js` chaincode to the Fabric network
-5. Run `app.js` and `watcher.js` (Node.js backend)
+5. Run `app.js` and `watcher.js` 
 
 ## Important Setup Commands
 
 ```powershell
 # On Windows Server VM1
 Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
-Install-ADDSForest -DomainName "iis.local" -InstallDns
+Install-ADDSForest -DomainName "xxxx.xxxx" -InstallDns
 Install-WindowsFeature Web-Server -IncludeManagementTools
 Install-WindowsFeature WindowsAdminCenter
 
 New-ADUser -Name "user1" -AccountPassword (ConvertTo-SecureString "SecureP@ss123" -AsPlainText -Force) -Enabled $true
-New-SmbShare -Name "partagesecure" -Path "C:\PartageSecure" -FullAccess "iis.local\user1"
+New-SmbShare -Name "partagesecure" -Path "C:\PartageSecure" -FullAccess "xxxx.xxxx\user1"
 
 # On Windows Server VM2
 Add-Computer -DomainName "xxxx.xxxx" -Credential (Get-Credential) -Restart
