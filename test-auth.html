@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Authentification et Blockchain</title>
+</head>
+<body>
+  <h1>Test d'authentification avec API</h1>
+
+  <form id="authForm">
+    <label>Nom d'utilisateur :</label><br>
+    <input type="text" id="username" value="administrator@iis.local"><br><br>
+
+    <label>Mot de passe :</label><br>
+    <input type="password" id="password" value="Azerty123@"><br><br>
+
+    <button type="submit">Envoyer (Authentification)</button>
+  </form>
+
+  <h3>Résultat Authentification :</h3>
+  <pre id="resultAuth"></pre>
+
+  <hr>
+
+  <h1>Test Blockchain - Access Control</h1>
+
+  <form id="accessForm">
+    <label>Utilisateur :</label><br>
+    <input type="text" name="user" placeholder="Utilisateur"><br><br>
+
+    <label>Action :</label><br>
+    <input type="text" name="action" placeholder="Action"><br><br>
+
+    <label>Ressource :</label><br>
+    <input type="text" name="resource" placeholder="Ressource"><br><br>
+
+    <button type="submit">Envoyer (Blockchain)</button>
+  </form>
+
+  <h3>Résultat Blockchain :</h3>
+  <pre id="resultBlockchain"></pre>
+
+  <script>
+    // Authentification Active Directory
+    const authForm = document.getElementById('authForm');
+    const resultAuth = document.getElementById('resultAuth');
+
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value
+      };
+
+      const response = await fetch('http://localhost:3000/api/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const responseData = await response.json();
+      resultAuth.textContent = JSON.stringify(responseData, null, 2);
+    });
+
+    // Blockchain Access Control
+    const accessForm = document.getElementById('accessForm');
+    const resultBlockchain = document.getElementById('resultBlockchain');
+
+    accessForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const user = e.target.user.value;
+      const action = e.target.action.value;
+      const resource = e.target.resource.value;
+
+      const response = await fetch('http://localhost:3000/api/access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user, action, resource })
+      });
+
+      const data = await response.json();
+      resultBlockchain.textContent = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>
